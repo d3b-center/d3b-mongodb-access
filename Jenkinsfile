@@ -4,7 +4,7 @@ properties([
     pipelineTriggers([[$class:"GitHubPushTrigger"]])
 ])
 pipeline {
-  agent { label 'docker-slave' }
+  agent { label 'terraform-testing' }
   stages{
     stage('Get Code') {
       steps {
@@ -37,7 +37,7 @@ pipeline {
        slackSend (color: '#FFFF00', message: "aws-kf-postgres-access:sweat_smile:Starting to grant users to non-PRD: Branch '${env.BRANCH} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
        sh '''
        aws s3 cp s3://kf-538745987955-us-east-1-service-secrets/aws-documentdb-cluster-nonprd/database.env ./
-       export $(cat ~/Downloads/database.env | xargs) 
+       export $(cat database.env | xargs) 
        ansible-playbook playbook/site.yml --extra-vars="apply_to_database="aws-infra-documentdb-nonprd" syslevel='service' create_users='true'"
        '''
        slackSend (color: '#00FF00', message: "aws-infra-docuementdb-nonprd-access:smile: Finished Creating Users in NON-PRD :Branch '${env.BRANCH} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
