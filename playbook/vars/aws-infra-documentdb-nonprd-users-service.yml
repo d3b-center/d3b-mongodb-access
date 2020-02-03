@@ -1,0 +1,6 @@
+---
+  rotate_password: false
+  users:
+     kf-api-persona:
+      username: "kf-api-persona"
+      database: "kf-api-persona"

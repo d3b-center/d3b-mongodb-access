@@ -1,0 +1,19 @@
+---
+ - name: "Create Mongo User"
+   mongodb_user: 
+     login_host: "{{ lookup('env','DB_HOST') }}"
+     login_user: "{{ lookup('env','DB_USERNAME') }}"
+     login_password: "{{ lookup('env','DB_PASSWORD') }}"
+     database: "{{ item.value.database }}"  
+     user: "{{ item.value.username }}" 
+     password: "{{ lookup('password', '/tmp/passwordfile chars=ascii_letters') }}" 
+     state: absent 
+     update_password: on_create
+     roles:
+       - db: admin
+         role: "dbAdminAnyDatabase"
+       - db: admin
+         role: "readWriteAnyDatabase"
+       - db: admin
+         role: "clusterAdmin"
+   register: command_result

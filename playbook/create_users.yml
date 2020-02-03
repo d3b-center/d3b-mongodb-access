@@ -1,0 +1,25 @@
+---
+ - name: "Create Mongo User"
+   mongodb_user: 
+     login_host: "{{ lookup('env','DB_HOST') }}"
+     login_user: "{{ lookup('env','DB_USERNAME') }}"
+     login_password: "{{ lookup('env','DB_PASSWORD') }}"
+     database: "{{ item.value.database }}"  
+     user: "{{ item.value.username }}" 
+     password: "{{ lookup('password', '/tmp/passwordfile chars=ascii_letters') }}" 
+     state: present
+     update_password: on_create
+     roles:
+       - db: admin
+         role: "dbAdminAnyDatabase"
+       - db: admin
+         role: "readWriteAnyDatabase"
+       - db: admin
+         role: "clusterAdmin"
+ - copy: 
+       content: "DB_USER={{ lookup('env','DB_USERNAME') }}\nDB_DATABASE={{ item.value.database }}\nDB_HOST={{ lookup('env','DB_HOST') }}\nDB_PASSWORD={{ lookup('password', '/tmp/passwordfile chars=ascii_letters') }}"
+       dest: "./mongodb_secret.env" 
+ - name: "Upload secret to s3"
+   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-dev-secrets/{{ item.value.username }}/mongodb_secret.env"
+ - command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-qa-secrets/{{ item.value.username }}/mongodb_secret.env"
+     

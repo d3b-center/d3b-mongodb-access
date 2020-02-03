@@ -1,0 +1,12 @@
+---
+ - hosts: localhost
+   gather_facts: false
+   tasks:
+   - fail: msg="Please define syslevel!!!!"
+     when: syslevel is not defined
+   - name: Import users
+     include_vars: vars/{{ apply_to_database }}-users-{{ syslevel }}.yml
+   - name: Add Users
+     include: create_users.yml
+     with_dict: "{{ users }}"
+     when: create_users is defined and create_users
