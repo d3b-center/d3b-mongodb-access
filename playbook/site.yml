@@ -7,6 +7,6 @@
    - name: Import users
      include_vars: vars/{{ apply_to_database }}-users-{{ syslevel }}.yml
    - name: Add Users
-     include: create_users.yml
+     include: create_users_{{ type_of_db }}.yml
      with_dict: "{{ users }}"
      when: create_users is defined and create_users

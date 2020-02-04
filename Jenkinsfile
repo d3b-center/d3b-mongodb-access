@@ -40,7 +40,7 @@ pipeline {
        set +x
        export $(cat database.env | xargs) 
        set -x
-       ansible-playbook playbook/site.yml --extra-vars="apply_to_database="aws-infra-documentdb-nonprd" syslevel='service' create_users='true'"
+       ansible-playbook playbook/site.yml --extra-vars="apply_to_database="aws-infra-documentdb-nonprd" syslevel='service' create_users='true' type_of_db='docdb'"
        '''
        slackSend (color: '#00FF00', message: "aws-infra-docuementdb-nonprd-access:smile: Finished Creating Users in NON-PRD :Branch '${env.BRANCH} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
      }
