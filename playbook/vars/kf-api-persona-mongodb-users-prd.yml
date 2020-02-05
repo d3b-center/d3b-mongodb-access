@@ -4,3 +4,4 @@
      kimm11:
       username: "kimm11"
       database: "persona"
+      permission: "read"
