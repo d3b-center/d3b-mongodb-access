@@ -1,0 +1,6 @@
+---
+  rotate_password: false
+  users:
+     kimm11:
+      username: "kimm11"
+      database: "persona"
