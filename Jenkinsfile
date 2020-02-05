@@ -82,7 +82,7 @@ pipeline {
        export $(cat db-admin.env | xargs)
        rm -rf db-admin.env
        set -x
-       ansible-playbook playbook/site.yml --extra-vars="apply_to_database=''" syslevel='prd' create_users='true' type_of_db='mongodb'"
+       ansible-playbook playbook/site.yml --extra-vars="apply_to_database='kf-api-persona' syslevel='prd' create_users='true' type_of_db='mongodb'"
        '''
        slackSend (color: '#00FF00', message: "aws-infra-docuementdb-nonprd-access:smile: Finished Creating Users in NON-PRD :Branch '${env.BRANCH} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
      }
