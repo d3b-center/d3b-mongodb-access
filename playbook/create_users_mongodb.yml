@@ -4,7 +4,7 @@
      login_host: "{{ lookup('env','DB_HOST') }}"
      login_user: "{{ lookup('env','DB_USERNAME') }}"
      login_password: "{{ lookup('env','DB_PASSWORD') }}"
-     login_database: "{{ lookup('env', 'DB_DATABASE') }}"
+     login_database: "admin"
      database: "{{ item.value.database }}"  
      user: "{{ item.value.username }}" 
      password: "{{ lookup('password', '/tmp/passwordfile chars=ascii_letters') }}" 
