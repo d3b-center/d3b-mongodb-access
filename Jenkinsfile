@@ -18,17 +18,9 @@ pipeline {
               return env.BRANCH_NAME == 'master';
             }
           }
-     steps {
-                                script {
-                                        env.DEPLOY_TO_SERVICE = input message: 'User input required',
-                                                        submitter: 'lubneuskia,heatha,blackdenc',
-                                                        parameters: [choice(name: 'aws-infra-docuementdb-nonprd-access: Deploy to Service Environment', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy the SERVICE environment')]
-                                }
-    }
    }
    stage('Deploy aws-infra-documentdb-nonprd to SERVICE') {
      when {
-            environment name: 'DEPLOY_TO_SERVICE', value: 'yes'
             expression {
               return env.BRANCH_NAME == 'master';
             }
@@ -58,18 +50,10 @@ pipeline {
               return env.BRANCH_NAME == 'master';
             }
           }
-     steps {
-                                script {
-                                        env.DEPLOY_TO_PRD = input message: 'User input required',
-                                                        submitter: 'lubneuskia,heatha,blackdenc',
-                                                        parameters: [choice(name: 'kf-persona: Deploy to Service Environment', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy the PRD environment')]
-                                }
-    }
    }
 
    stage('Deploy kf-api-persona-mongodb to PRD') {
      when {
-            environment name: 'DEPLOY_TO_PRD', value: 'yes'
             expression {
               return env.BRANCH_NAME == 'master';
             }
