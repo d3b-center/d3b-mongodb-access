@@ -4,6 +4,8 @@
    tasks:
    - set_fact:
        user_path: ""
+   - set_fact:
+       app_path: ""
    - fail: msg="Please define syslevel!!!!"
      when: syslevel is not defined
    - name: Import users

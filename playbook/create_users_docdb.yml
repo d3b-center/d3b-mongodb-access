@@ -23,13 +23,17 @@
    set_fact: 
      user_path: "users/"
    when: not item.value.app_user 
+ - name: Set app path
+   set_fact:
+     app_path: "{{ item.value.database }}-{{ syslevel }}/" 
+   when: not item.value.app_user
  - name: "Upload secret to s3"
-   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-{{ syslevel }}-secrets/{{ user_path }}{{ item.value.username }}/{{ item.value.database }}-{{ syslevel }}/mongodb_secret.env"
+   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-{{ syslevel }}-secrets/{{ user_path }}{{ item.value.username }}/{{ app_path }}mongodb_secret.env"
    when:  syslevel != "service"
  - name: "Upload secret to s3"
-   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-dev-secrets/{{ user_path }}{{ item.value.username }}/{{ item.value.database }}-{{ syslevel }}/mongodb_secret.env"
+   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-dev-secrets/{{ user_path }}{{ item.value.username }}/{{ app_path }}mongodb_secret.env"
    when:  syslevel == "service"
  - name: "Upload secret to s3"
-   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-qa-secrets/{{ user_path }}{{ item.value.username }}/{{ item.value.database }}-{{ syslevel }}/mongodb_secret.env"
+   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-qa-secrets/{{ user_path }}{{ item.value.username }}/{{ app_path }}mongodb_secret.env"
    when: syslevel == "service"
      
