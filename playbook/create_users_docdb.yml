@@ -22,7 +22,7 @@
  - name: Set Path 
    set_fact: 
      user_path: "users/"
-   when: app_user is not true 
+   when: not app_user 
  - name: "Upload secret to s3"
    command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-{{ syslevel }}-secrets/{{ user_path }}{{ item.value.username }}/{{ item.value.database }}-{{ syslevel }}/mongodb_secret.env"
    when:  syslevel != "service"
