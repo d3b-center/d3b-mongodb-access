@@ -5,3 +5,7 @@
       username: "kimm11"
       database: "persona"
       permission: "read"
+     dollyb:
+      username: "dollyb"
+      database: "persona"
+      permission: "read"
