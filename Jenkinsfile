@@ -43,15 +43,6 @@ pipeline {
        }
      }
    }
-
-   stage("Promotion kf-persona to PRD Service Environment") {
-     when {
-            expression {
-              return env.BRANCH_NAME == 'master';
-            }
-          }
-   }
-
    stage('Deploy kf-api-persona-mongodb to PRD') {
      when {
             expression {
