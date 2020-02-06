@@ -12,13 +12,6 @@ pipeline {
           checkout scm
       }
     }
-   stage("Promotion aws-infra-docuementdb-nonprd-access to NON-PRD Service Environment") {
-     when {
-            expression {
-              return env.BRANCH_NAME == 'master';
-            }
-          }
-   }
    stage('Deploy aws-infra-documentdb-nonprd to SERVICE') {
      when {
             expression {
