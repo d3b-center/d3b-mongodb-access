@@ -17,15 +17,19 @@
        - db: admin
          role: "clusterAdmin"
  - copy: 
-       content: "DB_USER={{ lookup('env','DB_USERNAME') }}\nDB_DATABASE={{ item.value.database }}\nDB_HOST={{ lookup('env','DB_HOST') }}\nDB_PASSWORD={{ lookup('password', '/tmp/passwordfile chars=ascii_letters') }}\nDB_PERMISSION='readWrite'\nDB_TYPE='docdb'"
+       content: "DB_USER={{ item.value.username }}\nDB_DATABASE={{ item.value.database }}\nDB_HOST={{ lookup('env','DB_HOST') }}\nDB_PASSWORD={{ lookup('password', '/tmp/passwordfile chars=ascii_letters') }}\nDB_PERMISSION='readWrite'\nDB_TYPE='docdb'"
        dest: "./mongodb_secret.env" 
+ - name: Set Path 
+   set_fact: 
+     user_path: "users/"
+   when: app_user is not true 
  - name: "Upload secret to s3"
-   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-{{ syslevel }}-secrets/users/{{ item.value.username }}/{{ item.value.database }}-{{ syslevel }}/mongodb_secret.env"
+   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-{{ syslevel }}-secrets/{{ user_path }}{{ item.value.username }}/{{ item.value.database }}-{{ syslevel }}/mongodb_secret.env"
    when:  syslevel != "service"
  - name: "Upload secret to s3"
-   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-dev-secrets/users/{{ item.value.username }}/{{ item.value.database }}-{{ syslevel }}/mongodb_secret.env"
+   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-dev-secrets/{{ user_path }}{{ item.value.username }}/{{ item.value.database }}-{{ syslevel }}/mongodb_secret.env"
    when:  syslevel == "service"
  - name: "Upload secret to s3"
-   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-qa-secrets/users/{{ item.value.username }}/{{ item.value.database }}-{{ syslevel }}/mongodb_secret.env"
+   command: "aws s3 cp ./mongodb_secret.env s3://kf-538745987955-us-east-1-qa-secrets/{{ user_path }}{{ item.value.username }}/{{ item.value.database }}-{{ syslevel }}/mongodb_secret.env"
    when: syslevel == "service"
      

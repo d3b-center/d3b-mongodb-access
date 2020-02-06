@@ -2,6 +2,8 @@
  - hosts: localhost
    gather_facts: false
    tasks:
+   - set_fact:
+       user_path: ""
    - fail: msg="Please define syslevel!!!!"
      when: syslevel is not defined
    - name: Import users
