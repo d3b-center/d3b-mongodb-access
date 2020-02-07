@@ -5,7 +5,9 @@
       username: "kimm11"
       database: "persona"
       permission: "read"
+      app_user: false
      dollyb:
       username: "dollyb"
       database: "persona"
       permission: "read"
+      app_user: false
