@@ -3,5 +3,5 @@
   users:
      kf-api-persona:
       username: "kf-api-persona"
-      database: "kf-api-persona"
+      database: "persona"
       app_user: true
