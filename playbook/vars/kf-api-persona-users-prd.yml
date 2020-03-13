@@ -6,11 +6,6 @@
       database: "persona"
       permission: "read"
       app_user: false
-    dollyb:
-      username: "dollyb"
-      database: "persona"
-      permission: "read"
-      app_user: false
     adipaul1981:
       username: "adipaul1981"
       database: "persona"
